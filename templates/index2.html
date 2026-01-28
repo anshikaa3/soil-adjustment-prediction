@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Prediction & Adjustment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            background-image: url('{{ url_for('static', filename='weeding.jpeg') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+        }
+        .dashboard {
+            display: flex;
+        }
+        .sidebar {
+            background-color: #111;
+            width: 220px;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar h2 {
+            color: #5aff5a;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar li {
+            padding: 10px;
+            cursor: pointer;
+            color: #ccc;
+        }
+        .sidebar li:hover, .sidebar li.active {
+            background-color: #444;
+            color: #fff;
+        }
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .box {
+            background-color: rgba(0,0,0,0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .box.adjustments {
+            background-color: #6a040f;
+            overflow-y: auto;
+            max-height: 250px;
+        }
+        .box.recommendations {
+            background-color: rgba(0,0,0,0.7);
+            overflow-y: auto;
+            max-height: 200px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .form-field label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        button[type="submit"] {
+            background-color: purple;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <div class="sidebar">
+        <h2>🌿 Green Field</h2>
+        <ul>
+            <li class="active">Dashboard</li>
+            <li>Farm Revenue</li>
+            <li>Weather</li>
+            <li>Soil Moisture</li>
+            <li>Sustainability</li>
+            <li>Crop Yield</li>
+            <li>Task Management</li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h1>🌾 Soil Prediction & Adjustment</h1>
+
+        <form method="POST">
+            <div class="form-grid box">
+                <div class="form-field">
+                    <label for="crop">Crop:</label>
+                    <select name="crop" required>
+                        <option value="">-- Select Crop --</option>
+                        {% for crop in crops %}
+                            <option value="{{ crop }}">{{ crop.title() }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="soil_type">Soil Type:</label>
+                    <select name="soil_type" required>
+                        <option value="Clay">Clay</option>
+                        <option value="Sandy">Sandy</option>
+                        <option value="Loamy">Loamy</option>
+                        <option value="Silty">Silty</option>
+                        <option value="Peaty">Peaty</option>
+                        <option value="Chalky">Chalky</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="water_source_type">Water Source:</label>
+                    <select name="water_source_type" required>
+                        <option value="Canal">Canal</option>
+                        <option value="River">River</option>
+                        <option value="Rain">Rain</option>
+                        <option value="Groundwater">Groundwater</option>
+                        <option value="Tank">Tank</option>
+                    </select>
+                </div>
+                {% for field, label in [
+                  ('soil_moisture', 'Soil Moisture'),
+                  ('sunlight_exposure', 'Sunlight Exposure'),
+                  ('wind_speed', 'Wind Speed'),
+                  ('co2_concentration', 'CO₂ Concentration'),
+                  ('organic_matter', 'Organic Matter'),
+                  ('irrigation_frequency', 'Irrigation Frequency'),
+                  ('crop_density', 'Crop Density'),
+                  ('pest_pressure', 'Pest Pressure'),
+                  ('fertilizer_usage', 'Fertilizer Usage'),
+                  ('growth_stage', 'Growth Stage'),
+                  ('urban_area_proximity', 'Urban Area Proximity'),
+                  ('frost_risk', 'Frost Risk'),
+                  ('water_usage_efficiency', 'Water Usage Efficiency')
+                ] %}
+                <div class="form-field">
+                    <label for="{{ field }}">{{ label }}</label>
+                    <input type="number" step="0.01" name="{{ field }}"
+                           value="{{ sensor_data[field] if sensor_data and field in sensor_data else '' }}" required>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit">Predict Adjustments</button>
+        </form>
+
+        {% if predicted_output %}
+        <div class="box adjustments">
+            <h3>Predicted Adjustments</h3>
+            <ul>
+                {% for key, value in predicted_output.items() %}
+                    <li><strong>{{ key }}:</strong> {{ value }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if fertilizer_recommendations %}
+        <div class="box recommendations">
+            <h3>Fertilizer Recommendations</h3>
+            <ul>
+                {% for rec in fertilizer_recommendations %}
+                    <li>🌿 {{ rec }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
