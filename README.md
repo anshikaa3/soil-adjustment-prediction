@@ -116,7 +116,7 @@ The dataset `Crop_recommendationV2.csv` contains labeled samples with the follow
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/ArjitaSahu123/soil-adjustment-prediction.git
+git clone https://github.com/anshikaa3/soil-adjustment-prediction.git
 cd soil-adjustment-prediction
 ```
 
@@ -142,7 +142,7 @@ pip install flask pandas numpy scikit-learn tensorflow
 python app.py
 ```
 
-### The app will be available at http://127.0.0.1:5000/.
+### The app will be available at [http://127.0.0.1:5000/.](https://soil-adjustment-prediction-production.up.railway.app/)
 
 ### Work flow
 
