@@ -76,7 +76,7 @@ A smart dashboard-enabled machine learning system for analyzing real-time and ma
 ## ⚙️ Setup Instructions
 
 ```bash
-git clone https://github.com/ArjitaSahu123/Soil_prediction-Project.git
+git clone https://github.com/anshikaa3/Soil_prediction-Project.git
 cd Soil_prediction-Project
 python -m venv venv
 source venv/bin/activate   # On Windows: venv\Scripts\activate
