@@ -30,67 +30,73 @@ def index():
     fertilizer_recommendations = None
 
     if request.method == "POST":
-        try:
-            user_input = {}
-            for key in feature_order[:-1]:  # exclude 'crop_label'
-                if key == "soil_type":
-                    user_input["soil_type"] = soil_type_mapping.get(request.form["soil_type"])
-                elif key == "water_source_type":
-                    user_input["water_source_type"] = water_source_mapping.get(request.form["water_source_type"])
-                else:
-                    user_input[key] = float(request.form[key])
+    try:
+        user_input = {}
 
-            # Encode crop label
-            crop_name = request.form.get("crop")
-            user_input["crop_label"] = int(label_encoder.transform([crop_name])[0])
-
-            # Prepare DataFrame
-            input_data = pd.DataFrame([user_input])[feature_order]
-            input_data_scaled = scaler.transform(input_data)
-
-            # Predict
-            predicted_adjustments = model.predict(input_data_scaled)[0]
-
-            # Build output
-            predicted_output = {
-                "Nitrogen (N)": f"{predicted_adjustments[0]:.2f}",
-                "Phosphorus (P)": f"{predicted_adjustments[1]:.2f}",
-                "Potassium (K)": f"{predicted_adjustments[2]:.2f}",
-                "Temperature (°C)": f"{predicted_adjustments[3]:.2f}",
-                "Humidity (%)": f"{predicted_adjustments[4]:.2f}",
-                "pH": f"{predicted_adjustments[5]:.2f}",
-                "Rainfall (mm)": f"{predicted_adjustments[6]:.2f}"
-            }
-
-            # Fertilizer Recommendations
-            n, p, k = predicted_adjustments[:3]
-            fertilizer_recommendations = []
-            if n > 0: fertilizer_recommendations.append(f"Add {n * 2:.2f} kg Urea (Nitrogen)")
-            if p > 0: fertilizer_recommendations.append(f"Add {p * 1.5:.2f} kg DAP (Phosphorus)")
-            if k > 0: fertilizer_recommendations.append(f"Add {k * 2:.2f} kg MOP (Potassium)")
-
-
-             # Crop Suggestions
-            crop_suggestion = []
-            if sum(abs(i) for i in   predicted_adjustments[:3]) > 50:
-              crop_suggestion = ["Wheat", "Barley", "Corn"]
+        for key in feature_order[:-1]:
+            if key == "soil_type":
+                user_input["soil_type"] = soil_type_mapping.get(request.form["soil_type"])
+            elif key == "water_source_type":
+                user_input["water_source_type"] = water_source_mapping.get(request.form["water_source_type"])
             else:
-               crop_suggestion = ["Soil is suitable for the selected crop"]
-            
+                user_input[key] = float(request.form[key])
 
-            
+        # crop encode
+        crop_name = request.form.get("crop")
+        user_input["crop_label"] = int(label_encoder.transform([crop_name])[0])
 
-        except Exception as e:
-            print("❌ Error:", e)
+        # dataframe
+        input_data = pd.DataFrame([user_input])[feature_order]
+        input_data_scaled = scaler.transform(input_data)
 
+        # prediction
+        predicted_adjustments = model.predict(input_data_scaled)[0]
+
+        # OUTPUT DICTIONARY
+        predicted_output = {
+            "Nitrogen (N)": f"{predicted_adjustments[0]:.2f}",
+            "Phosphorus (P)": f"{predicted_adjustments[1]:.2f}",
+            "Potassium (K)": f"{predicted_adjustments[2]:.2f}",
+            "Temperature (°C)": f"{predicted_adjustments[3]:.2f}",
+            "Humidity (%)": f"{predicted_adjustments[4]:.2f}",
+            "pH": f"{predicted_adjustments[5]:.2f}",
+            "Rainfall (mm)": f"{predicted_adjustments[6]:.2f}"
+        }
+
+        # Fertilizer
+        n, p, k = predicted_adjustments[:3]
+        fertilizer_recommendations = []
+
+        if n > 0:
+            fertilizer_recommendations.append(f"Add {n * 2:.2f} kg Urea (Nitrogen)")
+        if p > 0:
+            fertilizer_recommendations.append(f"Add {p * 1.5:.2f} kg DAP (Phosphorus)")
+        if k > 0:
+            fertilizer_recommendations.append(f"Add {k * 2:.2f} kg MOP (Potassium)")
+
+        # ⭐⭐⭐ CROP SUGGESTION FIX ⭐⭐⭐
+        if abs(n) + abs(p) + abs(k) > 50:
+            crop_suggestion = ["Wheat", "Barley", "Corn"]
+        else:
+            crop_suggestion = ["Soil is suitable"]
+
+    except Exception as e:
+        print("ERROR:", e)
+        crop_suggestion = []
+        fertilizer_recommendations = []
+        predicted_output = {}
+
+    else:
+       crop_suggestion = []
+    
     return render_template("index.html",
-                           user_input=user_input,
-                           predicted_output=predicted_output,
-                           fertilizer_recommendations=fertilizer_recommendations,
-                           crop_suggestion=crop_suggestion,
-                           crops=label_encoder.classes_)
+                       user_input=user_input,
+                       predicted_output=predicted_output,
+                       fertilizer_recommendations=fertilizer_recommendations,
+                       crop_suggestion=crop_suggestion,
+                       crops=label_encoder.classes_)
+   
 import os
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 

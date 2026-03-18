@@ -187,6 +187,16 @@
             </ul>
         </div>
         {% endif %}
+        {% if crop_suggestion %}
+    <div class="result">
+        <h2>🌱 Crop Suggestions:</h2>
+        <ul>
+        {% for crop in crop_suggestion %}
+            <li>{{ crop }}</li>
+        {% endfor %}
+        </ul>
+</div>
+{% endif %}
     </div>
 </div>
 </body>
