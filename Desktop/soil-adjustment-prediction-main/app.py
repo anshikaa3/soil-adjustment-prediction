@@ -28,6 +28,7 @@ def index():
     predicted_output = None
     user_input = None
     fertilizer_recommendations = None
+    crop_suggestion = None
 
     if request.method == "POST":
     try:
@@ -89,7 +90,7 @@ def index():
     else:
        crop_suggestion = []
     
-    return render_template("index.html",
+    return render_template("index2.html",
                        user_input=user_input,
                        predicted_output=predicted_output,
                        fertilizer_recommendations=fertilizer_recommendations,
