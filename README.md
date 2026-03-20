@@ -123,12 +123,6 @@ The dataset contains:
 
 ---
 
-## 📷 Workflow
-
-![Workflow](https://github.com/user-attachments/assets/145764c3-9986-4d5e-b81b-805bc8c892bb)
-
----
-
 ## 📷 Screenshots
 
 ![Dashboard](https://github.com/user-attachments/assets/ea9822bf-c03e-44aa-9f3d-783af1851ab8)
