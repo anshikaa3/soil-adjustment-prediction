@@ -1,32 +1,39 @@
 # 🌱 Soil Adjustment Prediction System
 
-A smart dashboard-enabled machine learning system for analyzing real-time and manual soil parameters and suggesting optimal nutrient adjustments, fertilizer recommendations, and crop-growing strategies.
+A smart machine learning-based web application that predicts soil nutrient adjustments, recommends fertilizers, and suggests alternative crops using real-time weather data.
 
 ---
 
 ## 📌 Features
 
-- 🌾 **Crop Label Prediction**: Encodes crop labels from user input.
-- 🧪 **Soil Parameter Input**: Allows manual input from farmers or automated input from IoT devices.
-- 🌐 **Web Dashboard UI**: Interactive, dashboard-like structure with quick access to multiple tools.
-- 📊 **Adjustment Predictions**: Outputs required corrections for N, P, K, pH, temperature, humidity, and rainfall.
-- 💊 **Fertilizer Recommendations**: Calculates Urea, DAP, MOP doses based on predicted soil deficiencies.
-- 📅 **Modular Dashboard Tabs**:
-  - 📉 Soil Moisture Comparison (Graph)
-  - 🌦️ Weather Forecasts for Sowing
-  - 📈 Yield Analysis: Actual vs Predicted
-  - 💰 Crop Revenue Timing Suggestion
-  - 🔗 Task Management: Connects to nearby farmers
+- 🌾 **Crop Selection**: User selects crop and location (city)
+- 🌐 **Weather API Integration**: Automatically fetches real-time environmental data
+- 🧪 **Reduced Manual Input**: Minimal input required (City + Crop)
+- 📊 **Adjustment Predictions**:
+  - Nitrogen (N)
+  - Phosphorus (P)
+  - Potassium (K)
+  - Temperature
+  - Humidity
+  - pH
+  - Rainfall
+
+- 💊 **Fertilizer Recommendations**:
+  - Urea (Nitrogen)
+  - DAP (Phosphorus)
+  - MOP (Potassium)
+
+- 🌱 **Smart Crop Recommendation**:
+  - Suggests alternative crops **only when conditions are unsuitable**
 
 ---
 
-## 💡 What's Unique?
+## 💡 What's New (Latest Update)
 
-- ✅ **IoT-Compatible**: Built to fetch sensor data in future updates.
-- ✅ **Manually Usable**: Works seamlessly with or without sensor devices.
-- ✅ **Real-time Scaling**: Supports scrollable and modular UI for large data sets.
-- ✅ **Enhanced UI**: Clean, dark-themed input + bright recommendation layout.
-- ✅ **Fertilizer Logic**: Based on predicted adjustments from ML model.
+- ✅ Integrated **Weather API (OpenWeather)**
+- ✅ Reduced dependency on manual inputs
+- ✅ Added **intelligent crop recommendation system**
+- ✅ Improved decision logic (only suggests crops when needed)
 
 ---
 
@@ -36,135 +43,124 @@ A smart dashboard-enabled machine learning system for analyzing real-time and ma
 - Flask
 - Pandas, NumPy
 - Scikit-learn
+- Joblib
+- Requests (API integration)
 - HTML, CSS
-- Bootstrap/Grid for layout
-- Jupyter Notebook (model training)
 
 ---
 
 ## 📁 Project Structure
 
 ```
-├── app.py                        # Flask backend for UI
-├── model.pkl                    # ML model for adjustment prediction
-├── scaler.pkl                   # Trained standard scaler
-├── label_encoder.pkl            # Crop label encoder
-├── Crop_recommendationV2.csv   # Dataset used
+├── app.py
+├── model.pkl
+├── scaler.pkl
+├── label_encoder.pkl
+├── Crop_recommendationV2.csv
 ├── templates/
-│   └── index.html               # UI Dashboard Page
+│   └── index.html
 ├── static/
 │   ├── style.css
-│   └── weeding.jpeg             # Background image
+│   └── weeding.jpeg
 ├── README.md
 ```
 
 ---
 
-## 🔢 Features Supported
+## ⚙️ How It Works
 
-| Section             | Functionality                                                   |
-| ------------------- | --------------------------------------------------------------- |
-| Dashboard (Default) | Main form + predictions                                         |
-| Weather             | Shows best growing season info                                  |
-| Soil Moisture       | Shows line graph comparing moisture vs needed moisture          |
-| Crop Yield          | Displays actual/predicted yield ratio                           |
-| Farm Revenue        | Shows peak time for selling the crop                            |
-| Task Management     | Shows nearby farmers & allows contact for best selling strategy |
+1. User inputs:
+   - City
+   - Crop
+
+2. System:
+   - Fetches weather data using API
+   - Processes input
+   - Runs ML model
+
+3. Output:
+   - Soil adjustments
+   - Fertilizer recommendations
+   - Crop recommendations (if required)
 
 ---
 
 ## ⚙️ Setup Instructions
 
 ```bash
-git clone https://github.com/anshikaa3/Soil_prediction-Project.git
-cd Soil_prediction-Project
+git clone https://github.com/anshikaa3/soil-adjustment-prediction.git
+cd soil-adjustment-prediction
+
 python -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
+venv\Scripts\activate   # Windows
+
 pip install -r requirements.txt
 python app.py
 ```
 
-Visit: `http://127.0.0.1:5000`
+Visit: http://127.0.0.1:5000
 
 ---
 
-## 🧪 Technologies Used
+## 🌐 Live Deployment
 
-- Python
-- Flask
-- Pandas, NumPy
-- Scikit-learn
-- TensorFlow / Keras
-- HTML/CSS (for frontend)
-- Jupyter Notebook
+https://soil-adjustment-prediction-production.up.railway.app/
+
+---
 
 ## 📊 Dataset
 
-The dataset `Crop_recommendationV2.csv` contains labeled samples with the following features:
+The dataset contains:
 
-- **N** – Nitrogen level in the soil
-- **P** – Phosphorus level
-- **K** – Potassium level
-- **temperature** – Temperature in Celsius
-- **humidity** – Relative humidity
-- **ph** – Soil pH value
-- **rainfall** – Rainfall in mm
-- **label** – Suitable crop name
+- Nitrogen (N)
+- Phosphorus (P)
+- Potassium (K)
+- Temperature
+- Humidity
+- pH
+- Rainfall
+- Crop label
 
-## 🚀 Getting Started
+---
 
-### 1. Clone the repository
+## 📷 Workflow
 
-```bash
-git clone https://github.com/anshikaa3/soil-adjustment-prediction.git
-cd soil-adjustment-prediction
-```
+![Workflow](https://github.com/user-attachments/assets/145764c3-9986-4d5e-b81b-805bc8c892bb)
 
-### 2. Install Dependencies
+---
 
-It is recommended to use a virtual environment:
+## 📷 Screenshots
 
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
+![Dashboard](https://github.com/user-attachments/assets/ea9822bf-c03e-44aa-9f3d-783af1851ab8)
 
-If requirements.txt is not present, manually install:
+![Input](https://github.com/user-attachments/assets/9a00d793-3ed9-4140-b2b7-9cb7b81ea4b5)
 
-```bash
-pip install flask pandas numpy scikit-learn tensorflow
-```
+---
 
-### 3. Run the Application
+## 📊 Output
 
-```bash
-python app.py
-```
+![Output1](https://github.com/user-attachments/assets/40fc31da-6b3d-42fa-909a-5849d55739c7)
 
-### The app will be available at [http://127.0.0.1:5000/.](https://soil-adjustment-prediction-production.up.railway.app/)
+![Output2](https://github.com/user-attachments/assets/8b1b577d-92e2-4edd-8a54-a87bf9fc7baf)
 
-### Work flow
+---
 
-![Screenshot 2024-11-04 143649](https://github.com/user-attachments/assets/145764c3-9986-4d5e-b81b-805bc8c892bb)
+## 🚀 Future Scope
 
-### 📷 Screenshots
+- IoT sensor integration
+- Advanced ML-based crop recommendation
+- Mobile application support
 
-![Screenshot 2024-12-08 152300](https://github.com/user-attachments/assets/ea9822bf-c03e-44aa-9f3d-783af1851ab8)
+---
 
-![Screenshot 2024-12-08 152334](https://github.com/user-attachments/assets/9a00d793-3ed9-4140-b2b7-9cb7b81ea4b5)
+## 🤝 Contributing
 
-### Output
+Pull requests are welcome.
 
-![Screenshot 2024-12-08 152357](https://github.com/user-attachments/assets/40fc31da-6b3d-42fa-909a-5849d55739c7)
+---
 
-![Screenshot 2024-12-08 152415](https://github.com/user-attachments/assets/8b1b577d-92e2-4edd-8a54-a87bf9fc7baf)
-
-🤝 Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-👩‍💻 Author
+## 👩‍💻 Author
 
 - Anshika Srivastava
-- 📧 Contact: [anshikasrivastava0304@gmail.com]
-- 🔗 GitHub: anshikaa3
+- 📧 [anshikasrivastava0304@gmail.com](mailto:anshikasrivastava0304@gmail.com)
+- 🔗 https://github.com/anshikaa3
