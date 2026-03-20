@@ -104,9 +104,7 @@ Visit: http://127.0.0.1:5000
 
 ## 🌐 Live Deployment
 
-https://soil-adjustment-prediction-production.up.railway.app/
-
----
+## https://soil-adjustment-prediction-production-23de.up.railway.app/
 
 ## 📊 Dataset
 
