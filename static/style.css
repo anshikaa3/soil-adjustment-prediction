@@ -1,0 +1,108 @@
+/* Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('weeding.jpeg') no-repeat center center fixed;
+    background-size: cover; /* Ensures the image covers the screen */
+    color: #333; /* General text color */
+    padding: 40px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    margin: auto;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px 30px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #6200ea;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #3700b3;
+}
+
+/* Result box styling */
+.result {
+    margin-top: 30px;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* "Your Input" Box: Light Green Gradient */
+.result.user-input {
+    background: linear-gradient(to right, #d4f5d4, #a8e6a8); /* Light green gradient */
+    color: #000; /* Black text for input values */
+}
+
+/* "Predicted Adjustments" Box: Light Red Gradient */
+.result.prediction-box {
+    background: linear-gradient(to right, #ffd4d4, #ffaaaa); /* Light red gradient */
+    color: #000; /* Black text for prediction values */
+}
+
+/* Input and output lists styling */
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul li {
+    background: #e7f3fe;
+    padding: 10px;
+    margin: 5px 0;
+    border-left: 5px solid #1976d2;
+    font-size: 16px;
+    border-radius: 6px;
+    color: #000; /* Black text for input values */
+}
+
+ul li strong {
+    color: #555; /* Dark gray for labels */
+}
