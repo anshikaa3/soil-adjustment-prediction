@@ -1,51 +1,78 @@
 # 🌱 Soil Adjustment Prediction System
 
-A smart machine learning-based web application that predicts soil nutrient adjustments, recommends fertilizers, and suggests alternative crops using real-time weather data.
+A smart **Machine Learning + Web-based application** that predicts soil nutrient adjustments, recommends fertilizers, and suggests suitable crops using **real-time weather data (API integration)**.
 
 ---
 
-## 📌 Features
+## 🚀 Live Demo
 
-- 🌾 **Crop Selection**: User selects crop and location (city)
-- 🌐 **Weather API Integration**: Automatically fetches real-time environmental data
-- 🧪 **Reduced Manual Input**: Minimal input required (City + Crop)
-- 📊 **Adjustment Predictions**:
-  - Nitrogen (N)
-  - Phosphorus (P)
-  - Potassium (K)
-  - Temperature
-  - Humidity
-  - pH
-  - Rainfall
-
-- 💊 **Fertilizer Recommendations**:
-  - Urea (Nitrogen)
-  - DAP (Phosphorus)
-  - MOP (Potassium)
-
-- 🌱 **Smart Crop Recommendation**:
-  - Suggests alternative crops **only when conditions are unsuitable**
+🔗 https://soil-adjustment-prediction-production-23de.up.railway.app/
 
 ---
 
-## 💡 What's New (Latest Update)
+## 📌 Key Features
 
-- ✅ Integrated **Weather API (OpenWeather)**
-- ✅ Reduced dependency on manual inputs
-- ✅ Added **intelligent crop recommendation system**
-- ✅ Improved decision logic (only suggests crops when needed)
+* 🌾 **Crop Selection**: User selects crop and city
+* 🌐 **Weather API Integration**:
+
+  * Automatically fetches:
+
+    * Temperature
+    * Humidity
+    * Wind Speed
+* ⚡ **Auto Input System**:
+
+  * Minimal manual input required
+  * Uses **default agronomic values** for missing fields
+
+---
+
+## 📊 ML Predictions
+
+The model predicts:
+
+* Nitrogen (N)
+* Phosphorus (P)
+* Potassium (K)
+* Temperature
+* Humidity
+* pH
+* Rainfall
+
+---
+
+## 💊 Fertilizer Recommendations
+
+Based on predicted values:
+
+* Urea → Nitrogen
+* DAP → Phosphorus
+* MOP → Potassium
+
+---
+
+## 🌱 Smart Crop Recommendation
+
+* Suggests alternative crops
+* Only triggers when environmental conditions are not suitable
+
+---
+
+## 📈 Data Visualization
+
+* 📊 Interactive **NPK Bar Chart** (Chart.js)
+* Helps users easily understand nutrient requirements
 
 ---
 
 ## 🧠 Technologies Used
 
-- Python
-- Flask
-- Pandas, NumPy
-- Scikit-learn
-- Joblib
-- Requests (API integration)
-- HTML, CSS
+* **Backend**: Flask (Python)
+* **Machine Learning**: Scikit-learn
+* **Data Processing**: Pandas, NumPy
+* **Model Handling**: Joblib
+* **API Integration**: OpenWeather API
+* **Frontend**: HTML, CSS, Chart.js
 
 ---
 
@@ -62,7 +89,9 @@ A smart machine learning-based web application that predicts soil nutrient adjus
 ├── static/
 │   ├── style.css
 │   └── weeding.jpeg
-├── README.md
+├── requirements.txt
+├── Procfile
+└── README.md
 ```
 
 ---
@@ -70,18 +99,22 @@ A smart machine learning-based web application that predicts soil nutrient adjus
 ## ⚙️ How It Works
 
 1. User inputs:
-   - City
-   - Crop
+
+   * City
+   * Crop
 
 2. System:
-   - Fetches weather data using API
-   - Processes input
-   - Runs ML model
+
+   * Fetches weather data via API
+   * Auto-fills missing parameters using default values
+   * Processes data through ML model
 
 3. Output:
-   - Soil adjustments
-   - Fertilizer recommendations
-   - Crop recommendations (if required)
+
+   * Soil adjustment recommendations
+   * Fertilizer suggestions
+   * Crop recommendations (if required)
+   * NPK visualization graph
 
 ---
 
@@ -102,57 +135,60 @@ Visit: http://127.0.0.1:5000
 
 ---
 
-## 🌐 Live Deployment
-
-https://soil-adjustment-prediction-production-23de.up.railway.app/
-
 ## 📊 Dataset
 
-The dataset contains:
+The dataset includes:
 
-- Nitrogen (N)
-- Phosphorus (P)
-- Potassium (K)
-- Temperature
-- Humidity
-- pH
-- Rainfall
-- Crop label
+* Nitrogen (N)
+* Phosphorus (P)
+* Potassium (K)
+* Temperature
+* Humidity
+* pH
+* Rainfall
+* Crop label
 
 ---
 
 ## 📷 Screenshots
 
+### Dashboard
+
 ![Dashboard](https://github.com/user-attachments/assets/ea9822bf-c03e-44aa-9f3d-783af1851ab8)
+
+### Input
 
 ![Input](https://github.com/user-attachments/assets/9a00d793-3ed9-4140-b2b7-9cb7b81ea4b5)
 
----
-
-## 📊 Output
+### Output
 
 ![Output1](https://github.com/user-attachments/assets/40fc31da-6b3d-42fa-909a-5849d55739c7)
-
 ![Output2](https://github.com/user-attachments/assets/8b1b577d-92e2-4edd-8a54-a87bf9fc7baf)
 
 ---
 
-## 🚀 Future Scope
+## 🚀 Future Enhancements
 
-- IoT sensor integration
-- Advanced ML-based crop recommendation
-- Mobile application support
+* 🌐 IoT sensor integration (real-time soil data)
+* 🤖 Advanced ML-based crop recommendation
+* 📱 Mobile app version
+* 📊 More interactive dashboards
 
 ---
 
 ## 🤝 Contributing
 
-Pull requests are welcome.
+Contributions are welcome! Feel free to fork the repo and submit pull requests.
 
 ---
 
 ## 👩‍💻 Author
 
-- Anshika Srivastava
-- 📧 [anshikasrivastava0304@gmail.com](mailto:anshikasrivastava0304@gmail.com)
-- 🔗 https://github.com/anshikaa3
+**Anshika Srivastava**
+
+📧 [anshikasrivastava0304@gmail.com](mailto:anshikasrivastava0304@gmail.com)
+🔗 https://github.com/anshikaa3
+
+---
+
+## ⭐ If you like this project, give it a star!
