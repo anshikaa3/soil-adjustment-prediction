@@ -4,192 +4,213 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soil Adjustment Dashboard</title>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        body {
-            background-image: url("{{ url_for('static', filename='weeding.jpeg') }}");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            font-family: 'Roboto', sans-serif;
-        }
-        .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px; 
-            border-radius: 10px;
-            margin: 20px auto;
-            width: 90%;
-            max-width: 1200px;
-        }
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .form-field input,
-        .form-field select {
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 8px;
-            width: 100%;
-        }
-        .form-field label {
-            font-weight: bold;
-        }
-        button[type="submit"] {
-            background-color: purple;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .result {
-            margin-top: 30px;
-        }
-        .result.user-input ul,
-        .result.prediction-box ul,
-        .result.fertilizer-box ul {
-            max-height: 200px;
-            overflow-y: auto;
-            background-color: white;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .result.prediction-box ul {
-            background-color: #ccffcc;
-        }
-        .result h2 {
-            margin-bottom: 10px;
-        }
-    </style>
 </head>
+
 <body>
 <div class="container">
     <h1>🌾 Soil Adjustment Dashboard</h1>
 
-    {% if sensor_data %}
-        <p><strong>🛰️ Sensor Status:</strong> Connected</p>
-    {% else %}
-        <p><strong>⚠️ Sensor Status:</strong> Not Connected</p>
-    {% endif %}
-
     <form method="POST">
         <div class="form-grid">
 
-            <!-- ✅ City Input (ADDED) -->
             <div class="form-field">
-                <label for="city">Enter City:</label>
+                <label>City:</label>
                 <input type="text" name="city">
             </div>
 
-            <!-- Crop Selection -->
             <div class="form-field">
-                <label for="crop">Select Crop:</label>
+                <label>Crop:</label>
                 <select name="crop" required>
-                    <option value="">-- Select Crop --</option>
                     {% for crop in crops %}
-                        <option value="{{ crop }}">{{ crop.title() }}</option>
+                        <option value="{{ crop }}">{{ crop }}</option>
                     {% endfor %}
                 </select>
             </div>
 
-            <!-- Soil Type -->
             <div class="form-field">
-                <label for="soil_type">Soil Type:</label>
-                <select name="soil_type" required>
-                    <option value="Clay">Clay</option>
-                    <option value="Sandy">Sandy</option>
-                    <option value="Loamy">Loamy</option>
-                    <option value="Silty">Silty</option>
-                    <option value="Peaty">Peaty</option>
-                    <option value="Chalky">Chalky</option>
+                <label>Soil Type:</label>
+                <select name="soil_type">
+                    <option>Clay</option>
+                    <option>Sandy</option>
+                    <option>Loamy</option>
                 </select>
             </div>
 
-            <!-- Water Source Type -->
             <div class="form-field">
-                <label for="water_source_type">Water Source Type:</label>
-                <select name="water_source_type" required>
-                    <option value="Canal">Canal</option>
-                    <option value="River">River</option>
-                    <option value="Rain">Rain</option>
-                    <option value="Groundwater">Groundwater</option>
-                    <option value="Tank">Tank</option>
+                <label>Water Source:</label>
+                <select name="water_source_type">
+                    <option>Canal</option>
+                    <option>Rain</option>
+                    <option>Groundwater</option>
                 </select>
             </div>
 
             {% for field, label in [
-              ('soil_moisture', 'Soil Moisture (%)'),
-              ('sunlight_exposure', 'Sunlight Exposure (hrs/day)'),
-              ('co2_concentration', 'CO2 Concentration (ppm)'),
-              ('organic_matter', 'Organic Matter (%)'),
-              ('irrigation_frequency', 'Irrigation Frequency (days)'),
-              ('crop_density', 'Crop Density (plants/m²)'),
-              ('pest_pressure', 'Pest Pressure (1-10)'),
-              ('fertilizer_usage', 'Fertilizer Usage (kg/ha)'),
+              ('soil_moisture', 'Soil Moisture'),
+              ('sunlight_exposure', 'Sunlight'),
+              ('co2_concentration', 'CO2'),
+              ('organic_matter', 'Organic Matter'),
+              ('irrigation_frequency', 'Irrigation'),
+              ('crop_density', 'Density'),
+              ('pest_pressure', 'Pest'),
+              ('fertilizer_usage', 'Fertilizer'),
               ('growth_stage', 'Growth Stage'),
-              ('urban_area_proximity', 'Urban Area Proximity (km)'),
-              ('frost_risk', 'Frost Risk (%)'),
-              ('water_usage_efficiency', 'Water Usage Efficiency (%)')
+              ('urban_area_proximity', 'Urban Distance'),
+              ('frost_risk', 'Frost'),
+              ('water_usage_efficiency', 'Water Efficiency')
             ] %}
             <div class="form-field">
-                <label for="{{ field }}">{{ label }}</label>
-                <input type="number" step="0.01" name="{{ field }}"
-                       value="{{ sensor_data[field] if sensor_data and field in sensor_data else '' }}" >
+                <label>{{ label }}</label>
+                <input type="number" step="0.01" name="{{ field }}">
             </div>
             {% endfor %}
+
         </div>
 
-        <button type="submit">Predict Adjustments</button>
+        <button type="submit">Predict</button>
     </form>
 
+    <!-- INPUT -->
     {% if user_input %}
     <div class="result user-input">
-        <h2>Your Input:</h2>
+        <h2>📥 Your Input</h2>
         <ul>
             {% for key, value in user_input.items() %}
-                <li><strong>{{ key.replace('_', ' ').title() }}:</strong> {{ value }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-
-    {% if predicted_output %}
-    <div class="result prediction-box">
-        <h2>Predicted Adjustments:</h2>
-        <ul>
-            {% for key, value in predicted_output.items() %}
                 <li><strong>{{ key }}:</strong> {{ value }}</li>
             {% endfor %}
         </ul>
     </div>
     {% endif %}
 
-    {% if fertilizer_recommendations %}
-    <div class="result fertilizer-box">
-        <h2>Fertilizer Recommendations:</h2>
+    <!-- PREDICTION -->
+    {% if predicted_output %}
+    <div class="result prediction-box">
+        <h2>📊 Predicted Adjustments</h2>
         <ul>
-            {% for rec in fertilizer_recommendations %}
-                <li>🌿 {{ rec }}</li>
+            {% for key, value in predicted_output.items() %}
+                <li>{{ key }} → {{ value }}</li>
             {% endfor %}
         </ul>
     </div>
     {% endif %}
+
+    <!-- FERTILIZER -->
+    {% if fertilizer_recommendations %}
+    <div class="result fertilizer-box">
+        <h2>🌿 Fertilizer</h2>
+        <ul>
+            {% for rec in fertilizer_recommendations %}
+                <li>🌱 {{ rec }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- CROPS -->
     {% if recommended_crops %}
-<div class="result">
-    <h2>🌱 Recommended Crops:</h2>
-    <ul>
-        {% for crop in recommended_crops %}
-            <li>🌾 {{ crop }}</li>
-        {% endfor %}
-    </ul>
+    <div class="result">
+        <h2>🌱 Recommended Crops</h2>
+        <ul>
+            {% for crop in recommended_crops %}
+                <li>{{ crop }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- PROFIT -->
+    {% if profit_data %}
+    <div class="result">
+        <h2>💰 Profit</h2>
+        <ul>
+            {% for item in profit_data %}
+                <li>{{ item.crop }} → ₹{{ item.profit }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- COMPARISON -->
+    {% if comparison_result %}
+    <div class="result">
+        <h2>📊 Comparison</h2>
+        <table>
+            <tr>
+                <th>Factor</th>
+                <th>Crop 1</th>
+                <th>Crop 2</th>
+            </tr>
+            {% for row in comparison_result %}
+            <tr>
+                <td>{{ row.factor }}</td>
+                <td>{{ row.crop1 }}</td>
+                <td>{{ row.crop2 }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+
+    <!-- NPK GRAPH -->
+    {% if predicted_output %}
+    <div class="result">
+        <h2>📊 NPK Graph</h2>
+        <canvas id="npkChart"></canvas>
+    </div>
+    {% endif %}
+
+    <!-- REASONS -->
+    {% if reasons %}
+    <div class="result">
+        <h2>🧠 Why this crop?</h2>
+        <ul>
+            {% for r in reasons %}
+                <li>{{ r }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
 </div>
-{% endif %}
-    
-</div>
+
+<!-- GRAPH SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    {% if predicted_output %}
+    const ctx = document.getElementById('npkChart');
+    if (ctx) {
+        const npkData = [
+            parseFloat("{{ predicted_output['Nitrogen (N)'] }}"),
+            parseFloat("{{ predicted_output['Phosphorus (P)'] }}"),
+            parseFloat("{{ predicted_output['Potassium (K)'] }}")
+        ];
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Nitrogen', 'Phosphorus', 'Potassium'],
+                datasets: [{
+                    label: 'NPK Values',
+                    data: npkData,
+                    backgroundColor: ['#4CAF50', '#FFC107', '#2196F3']
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+    {% endif %}
+
+});
+</script>
+
 </body>
 </html>

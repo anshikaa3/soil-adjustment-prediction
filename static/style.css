@@ -106,3 +106,57 @@ ul li {
 ul li strong {
     color: #555; /* Dark gray for labels */
 }
+
+.result {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.result h2 {
+    margin-bottom: 12px;
+    font-size: 20px;
+    color: #2c3e50;
+}
+
+ul li {
+    background: #f0f7ff;
+    padding: 10px 12px;
+    margin: 6px 0;
+    border-left: 4px solid #4a90e2;
+    border-radius: 6px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+ul li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.result.fertilizer-box ul li {
+    background: #e8f5e9;
+    border-left: 4px solid #43a047;
+}
+
+.result:nth-of-type(5) ul li {
+    background: #fff3e0;
+    border-left: 4px solid #fb8c00;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+table th {
+    background: #6200ea;
+    color: white;
+}
