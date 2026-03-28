@@ -191,4 +191,3 @@ Contributions are welcome! Feel free to fork the repo and submit pull requests.
 
 ---
 
-## ⭐ If you like this project, give it a star!
