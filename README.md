@@ -6,7 +6,7 @@ A smart **Machine Learning + Web-based application** that predicts soil nutrient
 
 ## 🚀 Live Demo
 
-🔗 https://soil-adjustment-prediction-production-23de.up.railway.app/
+🔗 https://soil-adjustment-prediction-production-6595.up.railway.app/
 
 ---
 
@@ -131,7 +131,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Visit: http://127.0.0.1:5000
+
 
 ---
 
